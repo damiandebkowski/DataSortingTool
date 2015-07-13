@@ -1,0 +1,379 @@
+<html lang="en">
+  <head>
+    <!--  <script src="libs/react.js"></script> -->
+    <script src="libs/react-with-addons.js"></script>
+    <script src="libs/JSXTransformer.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="libs/bootstrap/js/bootstrap.js"></script>
+    <script src="libs/FBSDK.js"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+    <title>Data Sorting</title>
+
+    <!-- Reference Main BootStrap CSS File -->
+    <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Reference Customizable Theme -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+
+  </head>
+
+  <body style="background-color:lightgreen">
+    <div id="content"></div>
+
+    <div id="chart" style="min-width: 300px; height: 400px: margin: 0 auto"></div>
+
+    <script type="text/jsx">
+        var FBLoginButton = React.createClass({
+           getInitialState: function(){
+                return{status: false};
+           },
+           sendDataToServer: function(response){
+                console.log("Sending Data Response")
+                jQuery.post('/FBToken', {object: response})
+           },
+           componentDidMount: function(){
+                window.fbAsyncInit = function() {
+                    FB.init({
+                        appId      : '490045904486271',
+                        cookie     : true,
+                        xfbml      : true,
+                        version    : 'v2.3'
+                    });
+                }
+           },
+           statusChangeCallback: function(response) {
+                console.log(response);
+                this.sendDataToServer(response);
+            },
+           checkLoginState: function() {
+                FB.getLoginStatus(function(response) {
+                    this.statusChangeCallback(response);
+                }.bind(this));
+           },
+           handleClick: function() {
+                FB.login(this.checkLoginState());
+           },
+           render: function(){
+                var text = this.state.status ? 'Logged In' : 'FaceBook Login';
+                return(
+                    <button id="login" name="login" type="button" className="btn btn-success"  onClick={this.handleClick}>{text}</button>
+                );
+            } 
+        });
+
+        var NavBar = React.createClass({
+            render: function(){
+                return(
+                    <nav className="navbar navbar-default">
+                        <div className="container">
+                            <div className="navbar-header">
+                                <button type="button" className="navbar-toggle collapsed btn btn-success" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                                    <span className="sr-only">Toggle navigation</span>
+                                    <span className="icon-bar"></span>
+                                    <span className="icon-bar"></span>
+                                    <span className="icon-bar"></span>
+                                </button>
+                                <a className="navbar-brand" href="#">Data Sorting</a>
+                            </div>
+                        <div id="navbar" className="collapse navbar-collapse">
+                            <ul className="nav navbar-nav">
+                                <li><a href="UI.html">Home</a></li>
+                                <li><a href="pages/About.html">About</a></li>
+                                <li><a href="pages/Contact.html">Contact</a></li>
+                            </ul>
+                            <form id="facebookLogin" name="facebookLogin" className="navbar-form navbar-right" action="/FBToken" method="post">
+                                <FBLoginButton/>
+                            </form>
+                         </div>
+                      </div>
+                    </nav>
+                );
+            }
+        });
+
+        var Button = React.createClass({
+            getInitialState: function(){
+                return{sort: false};
+            },
+            propTypes: {
+                update: React.PropTypes.func.isRequired
+            },
+            getClickEvent: function(event){
+                this.setState({sort: !this.state.sort});
+                this.props.update(this.state.sort);
+                console.log("Button Status: " + this.state.sort);
+            },
+            render: function(){
+                var text = this.state.sort ? 'Sorting Data' : 'Sort Data';
+
+                return(
+                    <button id="SortButton" name="SortButton" type="submit" value={this.props.data} className="btn btn-success btn-block" onClick={this.getClickEvent}>{text}</button>
+                );
+            }
+        });
+        
+        var CheckBox = React.createClass({
+            getInitialState: function(){
+                return{checked: true}
+            },
+            propTypes: {
+                update: React.PropTypes.func.isRequired
+            },
+            updateActiveDataTypes: function(event){
+                this.setState({
+                    checked: !this.state.checked
+                });
+                console.log("CheckBox Click: " + this.props.text + " Status: " + this.state.checked);
+                if(this.state.checked){
+                    this.props.update(this.props.id, this.state.checked);
+                }else{
+                    this.props.update(this.props.id, this.state.checked);
+                }
+            },
+            render: function(){
+                return(
+                    <input name={this.props.id} id={this.props.id} type="checkbox" onClick={this.updateActiveDataTypes}></input>
+                );
+            }
+        });
+
+        var DataTypeSelection = React.createClass({
+            getInitialState: function(){
+                return{
+                    active: []
+                }
+            },
+            propTypes: {
+                callback: React.PropTypes.func.isRequired,
+                update: React.PropTypes.func.isRequired
+            },
+            sendDataTypes: function(){
+                this.props.callback(this.state.active);
+            },
+            sortStatus: function(status){
+                this.props.update(status);
+            },
+            updateDataType: function(DataType, method){
+                var activeTemp = this.state.active
+                if(method){
+                    activeTemp.push(DataType)
+                }else if(this.state.active.length != 1){
+                    activeTemp.splice(activeTemp.indexOf(DataType), 1)
+                }else{
+                    activeTemp.pop()
+                }
+
+                this.setState({
+                    active: activeTemp
+                });
+
+                this.sendDataTypes();
+                console.log("Current Data Type List: " + this.state.active);
+            },
+            render: function(){
+                return(
+                    <div className="panel panel-default">
+                        <div className="panel-body">
+                            <form className="form-horizontal" action="/SortData" method="post">
+                                <div className="form-group">
+                                    <div className="col-sm-12">
+                                        <h3 className="text-center">
+                                            <span className="label label-success">Select Data Types:</span>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="col-sm-1 col-sm-offset-2">
+                                        <CheckBox id="Gender" name="Gender" update={this.updateDataType}/>
+                                    </div>
+                                    <div className="col-sm-5">
+                                        <label>Gender</label>
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="col-sm-1 col-sm-offset-2">
+                                        <CheckBox id="Age" name="Age" update={this.updateDataType}/>
+                                    </div>
+                                    <div className="col-sm-5">
+                                        <label>Age</label>
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="col-sm-1 col-sm-offset-2">
+                                        <CheckBox id="Location" name="Location" update={this.updateDataType}/>
+                                    </div>
+                                    <div className="col-sm-5">
+                                        <label>Location</label>
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="col-sm-1 col-sm-offset-2">
+                                        <CheckBox id="Education" name="Education" update={this.updateDataType}/>
+                                    </div>
+                                    <div className="col-sm-5">
+                                        <label>Education</label>
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="col-sm-12">
+                                            <Button data={this.state.active} update={this.sortStatus}/>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                );
+            }
+        });
+        
+        var seriesObject = [
+            {
+                name: 'Gender',
+                data: [10, 20]
+            },
+            {
+                name: 'Age',
+                data: [60, 70, 80, 90, 100]
+            },
+            {
+                name: 'Location',
+                data: [10, 30, 50, 70, 90]
+            },
+            {
+                name: 'Education',
+                data: [20, 50, 70, 90, 110]
+            }
+        ];
+
+        var modelObject = {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Monthly Average Rainfall'
+            },
+            subtitle: {
+                text: 'Source: WorldClimate.com'
+            },
+            xAxis: {
+                categories: [
+                'Gender',
+                'Feb',
+                'Mar',
+                'Apr',
+                'May',
+                'Jun',
+                'Jul',
+                'Aug',
+                'Sep',
+                'Oct',
+                'Nov',
+                'Dec'
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Rainfall (mm)'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' + '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            }
+        }
+
+        var Chart = React.createClass({
+                init: function(){
+                    var chartModel = _.cloneDeep(modelObject);
+                    var seriesModel = _.cloneDeep(seriesObject);
+                    var chartOptions = React.addons.update(chartModel, {chart: {renderTo: {$set: this.refs.chart.getDOMNode()}}, series: {$set: seriesModel}});
+                    var chartInstance = new window.Highcharts.Chart(chartOptions);
+                    this.setState({
+                        chartInstance: chartInstance
+                    });
+                },
+                render: function(){
+                    var chartStyle = {
+                        width: '300px',
+                        height: '400px',
+                        margin: '0 auto'
+                    };
+                    return(
+                        <div ref="chart"  style={chartStyle}></div>
+                    );
+                },
+                componentDidMount: function(){
+                    this.init();
+                }
+        });
+
+        var DataDisplay = React.createClass({
+           updateObjectModel: function(){
+                //Get Info From Server
+           },
+           updateSeriesModel: function(){
+                //Get Info From Server
+           },
+           render: function(){
+                return(
+                    <div className="panel panel-default">
+                        <div className="panel-body">
+                             <Chart/>
+                        </div>
+                    </div>
+                );
+            }
+        });
+        
+        var Container = React.createClass({
+            getInitialState: function(){
+                return{data: [], sort: true}
+            },
+            getDataTypes: function(newData){
+                this.setState({
+                    data: newData
+                });
+            },
+            getSortStatus: function(newStatus){
+                this.setState({sort: newStatus});
+            },
+            render: function(){
+                return(
+                    <div>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <NavBar/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-3 col-md-offset-1">
+                                <DataTypeSelection callback={this.getDataTypes} update={this.getSortStatus}/>
+                            </div>
+                            <div className="col-md-6 col-md-offset-1">
+                                <DataDisplay dataTypes={this.state.data} status={this.state.sort}/>
+                            </div>
+                        </div>
+                    </div>
+                );
+            }
+        });
+
+        React.render(
+           <Container/>,
+            document.getElementById('content')
+        );
+    </script>
+  </body>
+</html>

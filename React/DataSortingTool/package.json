@@ -1,0 +1,37 @@
+{
+  "name": "data_sorting_tool",
+  "version": "1.0.0",
+  "description": "learning how to use all the libs and apis",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "keywords": [
+    "npm"
+  ],
+  "author": "Damian Debkowski",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.3.5",
+    "browserify": "^10.2.4",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "highcharts": "0.0.8",
+    "jquery": "^2.1.4",
+    "lodash": "^3.10.0",
+    "react": "^0.13.3",
+    "react-addons": "^0.9.0",
+    "reactify": "^1.1.1",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.2.3"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.12.37",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-jasmine": "^0.3.6",
+    "karma-webpack": "^1.5.1",
+    "node-libs-browser": "^0.5.2",
+    "webpack": "^1.10.1"
+  }
+}

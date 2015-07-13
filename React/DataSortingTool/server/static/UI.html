@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="FBSDK.js"></script>
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="http://code.highcharts.com/modules/exporting.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+        <title>Data Sorting Tool</title>
+    </head>
+
+    <body>
+        <div id="content"></div>
+        <script>
+            window.fbAsyncInit = function(){
+                FB.init({
+                    appId: '490045904486271',
+                    cookie: true,
+                    xfbml: true,
+                    version: 'v2.3'
+                });
+            }
+        </script>
+        <script src="app.js"></script>
+    </body>
+</html>

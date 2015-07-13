@@ -1,0 +1,114 @@
+<html>
+	<head>
+
+
+		<script src="react.js"></script>
+    	<script src="JSXTransformer.js"></script>
+		<title>Data Sorting</title>
+	</head>
+	
+	<body style="background-color:lightblue">
+		<div id="content"></div>
+	
+		<script type="text/jsx">
+			// Child Node
+			var Button = React.createClass({			
+				getInitialState: function(){
+					return {sort: false};
+				},
+				getClickEvent: function(event){
+					this.setState({sort: !this.state.sort});
+                    console.log("Sorting: " + this.state.sort + " Active Data Types: " + this.props.sort);
+                },
+				render: function(){
+					var text = this.state.sort ? 'res/Sorting.png' : 'res/Start_Sorting.png';					
+
+					return(
+						<button name="SortButton" onClick={this.getClickEvent}><img src={text}/></button>
+					);
+				}
+			});
+
+			//Child Node
+			var Header = React.createClass({
+				render: function(){
+					return(
+						<p>{this.props.text}</p>
+					);
+				}
+			});
+
+			//Child Node
+			var CheckBox = React.createClass({
+				getInitialState: function(){
+					return {checked: true};
+				},
+                //Warns If the Prop From Container Node To Update The Active List Is Not Attached
+                propTypes: {
+                    update: React.PropTypes.func.isRequired
+                },
+                updateActiveDataType: function(event){
+                    this.setState({
+                        checked: !this.state.checked
+                    });
+                    if(this.state.checked){
+                        this.props.update(this.props.text, this.state.checked);
+                    }else{
+                        this.props.update(this.props.text, this.state.checked);
+                    }
+                    console.log("Checked: " + this.state.checked + " DataType: " + this.props.text)
+                },
+				render: function(){
+					return(
+                        <input type="checkbox" onClick={this.updateActiveDataType} value={this.props.text}>{this.props.text}</input>
+					);
+				}
+			});
+            
+			//Container Node
+			var SelectionSort = React.createClass({
+                getInitialState: function(){
+                    return{
+                        active: []
+                    }
+                },
+                
+                updateDataType: function(DataType, method){
+                    var activeTemp = this.state.active
+                    if(method){
+                        activeTemp.push(DataType)
+                    }else if(this.state.active.length != 1){
+                        activeTemp.splice(activeTemp.indexOf(DataType), 1)
+                    }else{
+                        activeTemp.pop()
+                    }
+
+                    this.setState({
+                        active: activeTemp
+                    });
+                    console.log("Current Active Data Types To Sort: " + this.state.active)
+                },
+
+				render: function(){
+					return(
+						<div>
+							<Header text="Select Data To Sort:"/>
+                            <CheckBox text="Gender" update={this.updateDataType}/>
+                            <CheckBox text="Age" update={this.updateDataType}/>
+                            <CheckBox text="Location" update={this.updateDataType}/>
+                            <CheckBox text="Pictures" update={this.updateDataType}/> <br/>
+                            <Button sort={this.state.active}/>
+						</div>	
+					);
+				}
+			});	
+			
+			React.render(
+				<SelectionSort/>,
+				document.getElementById('content')
+			);
+		</script>
+
+	</body>
+	
+</html>
