@@ -45805,10 +45805,11 @@ module.exports = require('./lib/React');
 },{"./lib/React":47}],190:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
-var NavBar = require('./UI/NavBar.jsx');
-var DataTypeSelection = require('./UI/DataTypeSelection.jsx');
-var DisplayGraph = require('./UI/DisplayGraph.jsx');
-var FacebookData = require('./UI/FacebookData.jsx');
+var NavBar = require('./pages/UI/NavBar.jsx');
+var Main = require('./pages/main.jsx');
+var About = require('./pages/About.jsx');
+var Contact = require('./pages/Contact.jsx');
+var Policy = require('./pages/Policy.jsx');
 
 /*
  * Class: Container
@@ -45820,20 +45821,10 @@ var FacebookData = require('./UI/FacebookData.jsx');
 
 var Container = React.createClass({displayName: "Container",
     getInitialState: function(){
-        return{active: [], login: false, renderState: 'HOME'}
-    },
-    //This is a callback function passed down to DataTypeSelection To Retrieve data back in newDataTypes
-    //newDataTypes is a copy of the var active in DataTypeSelection and will be used to update this.active and pass down this.active to DisplayGraph as a prop
-    updateDisplayGraph: function(newDataTypes){
-        this.setState({
-            active: newDataTypes
-        });
-        console.log("Display Graph Updated");
+        return{login: false, renderState: 'HOME'}
     },
     updateLoginStatus: function(status){
-        this.setState({
-            login: status
-        });
+        this.setState({login: status});
     },
     getRenderState: function(newRenderState){
         console.log("Container SetRenderState: " + newRenderState);
@@ -45843,12 +45834,20 @@ var Container = React.createClass({displayName: "Container",
         var render;
         switch(this.state.renderState){
             case 'HOME':
+                console.log("Rendering Home")
+                render = React.createElement(Main, {loginStatus: this.state.login})
                 break;
             case 'ABOUT':
+                console.log("Rendering About");
+                render = React.createElement(About, null)
                 break;
             case 'CONTACT':
+                console.log("Rendering Contact");
+                render = React.createElement(Contact, null)
                 break;
             case 'POLICY':
+                console.log("Rendering Private Policy");
+                render = React.createElement(Policy, null)
                 break;
             default:
                 console.log("Error: renderState invalid");
@@ -45860,19 +45859,7 @@ var Container = React.createClass({displayName: "Container",
                         React.createElement(NavBar, {getRenderState: this.getRenderState, updateLoginStatus: this.updateLoginStatus})
                     )
                 ), 
-                React.createElement("div", {className: "row"}, 
-                    React.createElement("div", {className: "col-md-3 col-md-offset-1"}, 
-                        React.createElement(DataTypeSelection, {updateDisplayGraph: this.updateDisplayGraph})
-                    ), 
-                    React.createElement("div", {className: "col-md-6 col-md-offset-1"}, 
-                        React.createElement(FacebookData, {loginStatus: this.state.login})
-                    )
-                ), 
-                React.createElement("div", {className: "row"}, 
-                    React.createElement("div", {className: "col-md-8 col-md-offset-2"}, 
-                        React.createElement(DisplayGraph, {dataTypes: this.state.active})
-                    )
-                )
+                render
             )
         );
     }
@@ -45880,7 +45867,129 @@ var Container = React.createClass({displayName: "Container",
 
 module.exports = Container;
 
-},{"./UI/DataTypeSelection.jsx":193,"./UI/DisplayGraph.jsx":194,"./UI/FacebookData.jsx":196,"./UI/NavBar.jsx":197,"bootstrap":1,"react":189}],191:[function(require,module,exports){
+},{"./pages/About.jsx":192,"./pages/Contact.jsx":193,"./pages/Policy.jsx":194,"./pages/UI/NavBar.jsx":201,"./pages/main.jsx":202,"bootstrap":1,"react":189}],191:[function(require,module,exports){
+var React = require('react');
+var Container = require('./Container.jsx');
+
+React.render(
+    React.createElement(Container, null),
+    document.getElementById('content')
+);
+
+},{"./Container.jsx":190,"react":189}],192:[function(require,module,exports){
+var React = require('react');
+var Bootstrap = require('bootstrap');
+
+var About = React.createClass({displayName: "About",
+    render: function(){
+        return(
+            React.createElement("div", null, 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-md-12"}, 
+                        React.createElement("h1", {className: "text-center"}, "Welcome To DataSortingTool")
+                    )
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-md-offset-1"}, 
+                        React.createElement("h3", null, React.createElement("strong", null, "Objective:"))
+                    ), 
+                    React.createElement("div", {className: "col-md-10 col-md-offset-1"}, 
+                        React.createElement("p", {className: "text-justify"}, 
+                            "My goal is to provide users on facebook with an idea of how their content affects their audience. By showing the user demographic" + ' ' +
+                            "statistics through their previous posts, photos, videos, and statuses; the user can analyze how they can create content to target a specific audience range based on" + ' ' +
+                            "age, gender, education, and location."
+                        )
+                    )
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-md-offset-1"}, 
+                        React.createElement("h3", null, React.createElement("strong", null, "How?"))
+                    ), 
+                    React.createElement("div", {className: "col-md-10 col-md-offset-1"}, 
+                        React.createElement("p", {className: "text-justify"}, 
+                            "By logging into facebook on my website, you grant my app special permissions from facebook to utilize information from you facebook account. My app is only granted" + ' ' +
+                            "information from your posts, videos, photos, and statuses. I then can request access to specific information from facebook's servers based on those permissions." + ' ' +
+                            "With the information I obtain, I am able to display it through pi chart graphs to help the user digest what they are analyzing."
+                        )
+                    )
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-md-offset-1"}, 
+                        React.createElement("h3", null, React.createElement("strong", null, "Instructions"))
+                    ), 
+                    React.createElement("div", {className: "col-md-10 col-md-offset-1"}, 
+                        React.createElement("ol", null, 
+                            React.createElement("li", null, "Log Into Facebook By Clicking The Green 'Facebook Login' Button In The Upper Right Corner Of The Website"), 
+                            React.createElement("li", null, "Make Sure You Are On The Main Page To Access The App, Which Can Be Accessed When Clicking The 'Home' Button Near The Upper Left Corner Of The Website"), 
+                            React.createElement("li", null, "Select A Data Type To Analyze In The 'Select Data Types:' Panel"), 
+                            React.createElement("li", null, "Click On One Of The Buttons: 'Posts, Pictures, Videos, or Status' To Load A List Of Your Content Within The Panel"), 
+                            React.createElement("li", null, "Select One Of Your Contents From Facebook To Analyze The Demographic Statiscs"), 
+                            React.createElement("li", null, "Scroll Down To View The Information In the Pie Charts")
+                        )
+                    )
+                )
+            )
+        );
+    }
+});
+
+module.exports = About;
+
+},{"bootstrap":1,"react":189}],193:[function(require,module,exports){
+var React = require('react');
+var Bootstrap = require('bootstrap');
+
+var Contact = React.createClass({displayName: "Contact",
+    render: function(){
+        return(
+            React.createElement("div", null, 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-md-12"}, 
+                        React.createElement("h1", {className: "text-center"}, "Contact")
+                    )
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-md-12"}, 
+                        React.createElement("h4", {className: "text-center"}, React.createElement("strong", null, "Incase Of Any Bugs In The App You May Find, Please Use The Following Information To Contact Me. Thank You For Your Support!")), "i"
+                    )
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-md-11 col-md-offset-1"}, 
+                        React.createElement("p", {className: "text-justify"}, 
+                            "Email: Damian3395@gmail.com"
+                        )
+                    )
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-md-1 col-md-offset-1"}, 
+                        React.createElement("p", null, "GitHub:")
+                    ), 
+                    React.createElement("div", {className: "col-md-1"}, 
+                        React.createElement("button", {type: "button", className: "btn btn-link"}, "github.com/damiandebkowski/DataSortingTool/issues")
+                    )
+                )
+            )
+        );
+    }
+});
+
+module.exports = Contact;
+
+},{"bootstrap":1,"react":189}],194:[function(require,module,exports){
+var React = require('react');
+var Bootstrap = require('bootstrap');
+
+var Policy = React.createClass({displayName: "Policy",
+    render: function(){
+        return(
+            React.createElement("p", null, "Test")
+        );
+    }
+});
+
+module.exports = Policy;
+
+},{"bootstrap":1,"react":189}],195:[function(require,module,exports){
 var React = require('react');
 var ReactAddon = require('react/addons');
 var Bootstrap = require('bootstrap');
@@ -45971,7 +46080,7 @@ var PieChart = React.createClass({displayName: "PieChart",
 
 module.exports = PieChart;
 
-},{"bootstrap":1,"jquery":15,"lodash":16,"react":189,"react/addons":17}],192:[function(require,module,exports){
+},{"bootstrap":1,"jquery":15,"lodash":16,"react":189,"react/addons":17}],196:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
 
@@ -46014,7 +46123,7 @@ var CheckBox = React.createClass({displayName: "CheckBox",
 
 module.exports = CheckBox;
 
-},{"bootstrap":1,"react":189}],193:[function(require,module,exports){
+},{"bootstrap":1,"react":189}],197:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
 var CheckBox = require('./CheckBox.jsx');
@@ -46110,7 +46219,7 @@ var DataTypeSelection = React.createClass({displayName: "DataTypeSelection",
 
 module.exports = DataTypeSelection;
 
-},{"./CheckBox.jsx":192,"bootstrap":1,"jquery":15,"react":189}],194:[function(require,module,exports){
+},{"./CheckBox.jsx":196,"bootstrap":1,"jquery":15,"react":189}],198:[function(require,module,exports){
 var React = require('react');
 var ReactAddon = require('react/addons');
 var Bootstrap = require('bootstrap');
@@ -46176,7 +46285,7 @@ var DisplayGraph = React.createClass({displayName: "DisplayGraph",
 
 module.exports = DisplayGraph;
 
-},{"./Charts/PieChart.jsx":191,"bootstrap":1,"lodash":16,"react":189,"react/addons":17}],195:[function(require,module,exports){
+},{"./Charts/PieChart.jsx":195,"bootstrap":1,"lodash":16,"react":189,"react/addons":17}],199:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
 var $ = require('jquery');
@@ -46219,7 +46328,7 @@ var FBLogin = React.createClass({displayName: "FBLogin",
 
 module.exports = FBLogin;
 
-},{"bootstrap":1,"jquery":15,"react":189}],196:[function(require,module,exports){
+},{"bootstrap":1,"jquery":15,"react":189}],200:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
 var $ = require('jquery');
@@ -46306,7 +46415,7 @@ var FacebookData = React.createClass({displayName: "FacebookData",
 
 module.exports = FacebookData;
 
-},{"bootstrap":1,"jquery":15,"react":189}],197:[function(require,module,exports){
+},{"bootstrap":1,"jquery":15,"react":189}],201:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
 var FBLoginButton = require('./FB/FBLogin.jsx');
@@ -46356,13 +46465,43 @@ var NavBar = React.createClass({displayName: "NavBar",
 
 module.exports = NavBar;
 
-},{"./FB/FBLogin.jsx":195,"bootstrap":1,"react":189}],198:[function(require,module,exports){
+},{"./FB/FBLogin.jsx":199,"bootstrap":1,"react":189}],202:[function(require,module,exports){
 var React = require('react');
-var Container = require('./Container.jsx');
+var BootStrap = require('bootstrap');
 
-React.render(
-    React.createElement(Container, null),
-    document.getElementById('content')
-);
+var DataTypeSelection = require('./UI/DataTypeSelection.jsx');
+var DisplayGraph = require('./UI/DisplayGraph.jsx');
+var FacebookData = require('./UI/FacebookData.jsx');
 
-},{"./Container.jsx":190,"react":189}]},{},[198]);
+var Main = React.createClass({displayName: "Main",
+    getInitialState: function(){
+        return{ active: [], login: false}
+    },
+    updateDisplayGraph: function(newDataTypes){
+        this.setState({active: newDataTypes});
+        console.log("Updated Data Types: " + this.state.active);
+    },
+    render: function(){
+        return(
+            React.createElement("div", null, 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-md-3 col-md-offset-1"}, 
+                        React.createElement(DataTypeSelection, {updateDisplayGraph: this.updateDisplayGraph})
+                    ), 
+                    React.createElement("div", {className: "col-md-6 col-md-offset-1"}, 
+                        React.createElement(FacebookData, {loginStatus: this.state.login})
+                    )
+                ), 
+                React.createElement("div", {className: "row"}, 
+                    React.createElement("div", {className: "col-md-8 col-md-offset-2"}, 
+                        React.createElement(DisplayGraph, {dataTypes: this.state.active})
+                    )
+                )
+            )
+        );
+    }
+});
+
+module.exports = Main;
+
+},{"./UI/DataTypeSelection.jsx":197,"./UI/DisplayGraph.jsx":198,"./UI/FacebookData.jsx":200,"bootstrap":1,"react":189}]},{},[191]);

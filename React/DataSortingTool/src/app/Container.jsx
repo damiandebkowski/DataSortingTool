@@ -1,9 +1,10 @@
 var React = require('react');
 var Bootstrap = require('bootstrap');
-var NavBar = require('./UI/NavBar.jsx');
-var DataTypeSelection = require('./UI/DataTypeSelection.jsx');
-var DisplayGraph = require('./UI/DisplayGraph.jsx');
-var FacebookData = require('./UI/FacebookData.jsx');
+var NavBar = require('./pages/UI/NavBar.jsx');
+var Main = require('./pages/main.jsx');
+var About = require('./pages/About.jsx');
+var Contact = require('./pages/Contact.jsx');
+var Policy = require('./pages/Policy.jsx');
 
 /*
  * Class: Container
@@ -15,20 +16,10 @@ var FacebookData = require('./UI/FacebookData.jsx');
 
 var Container = React.createClass({
     getInitialState: function(){
-        return{active: [], login: false, renderState: 'HOME'}
-    },
-    //This is a callback function passed down to DataTypeSelection To Retrieve data back in newDataTypes
-    //newDataTypes is a copy of the var active in DataTypeSelection and will be used to update this.active and pass down this.active to DisplayGraph as a prop
-    updateDisplayGraph: function(newDataTypes){
-        this.setState({
-            active: newDataTypes
-        });
-        console.log("Display Graph Updated");
+        return{login: false, renderState: 'HOME'}
     },
     updateLoginStatus: function(status){
-        this.setState({
-            login: status
-        });
+        this.setState({login: status});
     },
     getRenderState: function(newRenderState){
         console.log("Container SetRenderState: " + newRenderState);
@@ -38,12 +29,20 @@ var Container = React.createClass({
         var render;
         switch(this.state.renderState){
             case 'HOME':
+                console.log("Rendering Home")
+                render = <Main loginStatus={this.state.login}/>
                 break;
             case 'ABOUT':
+                console.log("Rendering About");
+                render = <About/>
                 break;
             case 'CONTACT':
+                console.log("Rendering Contact");
+                render = <Contact/>
                 break;
             case 'POLICY':
+                console.log("Rendering Private Policy");
+                render = <Policy/>
                 break;
             default:
                 console.log("Error: renderState invalid");
@@ -55,19 +54,7 @@ var Container = React.createClass({
                         <NavBar getRenderState={this.getRenderState} updateLoginStatus={this.updateLoginStatus}/>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-md-3 col-md-offset-1">
-                        <DataTypeSelection updateDisplayGraph={this.updateDisplayGraph}/>
-                    </div>
-                    <div className="col-md-6 col-md-offset-1">
-                        <FacebookData loginStatus={this.state.login}/>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-8 col-md-offset-2">
-                        <DisplayGraph dataTypes={this.state.active}/>
-                    </div>
-                </div>
+                {render}
             </div>
         );
     }
