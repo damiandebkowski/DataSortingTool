@@ -45867,7 +45867,7 @@ var Container = React.createClass({displayName: "Container",
 
 module.exports = Container;
 
-},{"./pages/About.jsx":192,"./pages/Contact.jsx":193,"./pages/Policy.jsx":194,"./pages/UI/NavBar.jsx":201,"./pages/main.jsx":202,"bootstrap":1,"react":189}],191:[function(require,module,exports){
+},{"./pages/About.jsx":192,"./pages/Contact.jsx":193,"./pages/Policy.jsx":194,"./pages/UI/NavBar.jsx":202,"./pages/main.jsx":203,"bootstrap":1,"react":189}],191:[function(require,module,exports){
 var React = require('react');
 var Container = require('./Container.jsx');
 
@@ -46170,6 +46170,28 @@ module.exports = CheckBox;
 },{"bootstrap":1,"react":189}],197:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
+
+var Content = React.createClass({displayName: "Content",
+    render: function(){
+        var items = [];
+
+        for(var i = 0; i < 20; i++){
+            items.push(React.createElement("button", {type: "button", className: "list-group-item"}, "Button ", i))
+        }
+
+        return(
+            React.createElement("div", {class: "list-group"}, 
+                items
+            )
+        );
+    }
+});
+
+module.exports = Content;
+
+},{"bootstrap":1,"react":189}],198:[function(require,module,exports){
+var React = require('react');
+var Bootstrap = require('bootstrap');
 var CheckBox = require('./CheckBox.jsx');
 var $ = require('jquery');
 
@@ -46263,7 +46285,7 @@ var DataTypeSelection = React.createClass({displayName: "DataTypeSelection",
 
 module.exports = DataTypeSelection;
 
-},{"./CheckBox.jsx":196,"bootstrap":1,"jquery":15,"react":189}],198:[function(require,module,exports){
+},{"./CheckBox.jsx":196,"bootstrap":1,"jquery":15,"react":189}],199:[function(require,module,exports){
 var React = require('react');
 var ReactAddon = require('react/addons');
 var Bootstrap = require('bootstrap');
@@ -46329,7 +46351,7 @@ var DisplayGraph = React.createClass({displayName: "DisplayGraph",
 
 module.exports = DisplayGraph;
 
-},{"./Charts/PieChart.jsx":195,"bootstrap":1,"lodash":16,"react":189,"react/addons":17}],199:[function(require,module,exports){
+},{"./Charts/PieChart.jsx":195,"bootstrap":1,"lodash":16,"react":189,"react/addons":17}],200:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
 var $ = require('jquery');
@@ -46376,10 +46398,11 @@ var FBLogin = React.createClass({displayName: "FBLogin",
 
 module.exports = FBLogin;
 
-},{"bootstrap":1,"jquery":15,"react":189}],200:[function(require,module,exports){
+},{"bootstrap":1,"jquery":15,"react":189}],201:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
 var $ = require('jquery');
+var Content = require('./Content.jsx');
 
 var FacebookData = React.createClass({displayName: "FacebookData",
     getInitialState: function(){
@@ -46400,32 +46423,31 @@ var FacebookData = React.createClass({displayName: "FacebookData",
         }
     },
     renderData: function(data){
-        console.log("Render Data: " + data);
         this.setState({contentData: data});
     },
     loadPosts: function(event){
         this.setState({
              selected: 'posts'
         });
-        $.get("/FBContent", {data:'posts'}, function(newdata){console.log("Data " + newdata); this.renderData(newdata);}.bind(this),"text");
+        $.get("/FBContent", {data:'posts'}, function(newdata){this.renderData(newdata);}.bind(this),"text");
     },
     loadPictures: function(event){
         this.setState({
             selected: 'pictures'
         });
-        $.get("/FBContent", {data: 'pictures'}, function(data){console.log("Data " + data);}.bind(this), "text");
+        $.get("/FBContent", {data: 'pictures'}, function(newdata){this.renderData(newdata);}.bind(this), "text");
     },
     loadVideos: function(event){
         this.setState({
             selected: 'videos'
         });
-        $.get("/FBContent", {data: 'videos'}, function(data){console.log("Data " + data);}.bind(this), "text");
+        $.get("/FBContent", {data: 'videos'}, function(newdata){this.renderData(newdata);}.bind(this), "text");
     },
     loadStatus: function(event){
         this.setState({
             selected: 'status'
         });
-        $.get("/FBContent", {data: 'status'}, function(data){console.log("Data " + data);}.bind(this), "text");
+        $.get("/FBContent", {data: 'status'}, function(newdata){this.renderData(newdata);}.bind(this), "text");
     },
     render: function(){
         var errorLogin;
@@ -46435,18 +46457,12 @@ var FacebookData = React.createClass({displayName: "FacebookData",
 
         var loadContent;
         if(this.state.selected.length != 0){
-            loadContent = React.createElement("h3", {className: "text-center"}, React.createElement("span", {className: "label label-success"}, "Loading ", this.state.selected))
-        }
-
-        var panelStyle = {
-            height: "600px",
-            maxheight: "600px",
-            overflowy: "scroll"
+            loadContent = React.createElement(Content, null)
         }
 
         return(
             React.createElement("div", {className: "panel panel-default"}, 
-                React.createElement("div", {className: "panel-body", style: panelStyle}, 
+                React.createElement("div", {className: "panel-body scroll-panel"}, 
                     React.createElement("div", {className: "btn-group", role: "group"}, 
                         React.createElement("button", {id: "posts", name: "posts", type: "button", className: "btn btn-success", onClick: this.loadPosts}, "Posts"), 
                         React.createElement("button", {id: "pictures", name: "pictures", type: "button", className: "btn btn-success", onClick: this.loadPictures}, "Pictures"), 
@@ -46463,7 +46479,7 @@ var FacebookData = React.createClass({displayName: "FacebookData",
 
 module.exports = FacebookData;
 
-},{"bootstrap":1,"jquery":15,"react":189}],201:[function(require,module,exports){
+},{"./Content.jsx":197,"bootstrap":1,"jquery":15,"react":189}],202:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
 var FBLoginButton = require('./FB/FBLogin.jsx');
@@ -46513,7 +46529,7 @@ var NavBar = React.createClass({displayName: "NavBar",
 
 module.exports = NavBar;
 
-},{"./FB/FBLogin.jsx":199,"bootstrap":1,"react":189}],202:[function(require,module,exports){
+},{"./FB/FBLogin.jsx":200,"bootstrap":1,"react":189}],203:[function(require,module,exports){
 var React = require('react');
 var BootStrap = require('bootstrap');
 
@@ -46552,4 +46568,4 @@ var Main = React.createClass({displayName: "Main",
 
 module.exports = Main;
 
-},{"./UI/DataTypeSelection.jsx":197,"./UI/DisplayGraph.jsx":198,"./UI/FacebookData.jsx":200,"bootstrap":1,"react":189}]},{},[191]);
+},{"./UI/DataTypeSelection.jsx":198,"./UI/DisplayGraph.jsx":199,"./UI/FacebookData.jsx":201,"bootstrap":1,"react":189}]},{},[191]);
