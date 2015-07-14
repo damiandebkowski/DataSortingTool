@@ -43,7 +43,7 @@ var Container = React.createClass({
             case 'POLICY':
                 console.log("Rendering Private Policy");
                 render = <Policy/>
-                break;
+            break;
             default:
                 console.log("Error: renderState invalid");
         }

@@ -45848,7 +45848,7 @@ var Container = React.createClass({displayName: "Container",
             case 'POLICY':
                 console.log("Rendering Private Policy");
                 render = React.createElement(Policy, null)
-                break;
+            break;
             default:
                 console.log("Error: renderState invalid");
         }
@@ -45982,7 +45982,51 @@ var Bootstrap = require('bootstrap');
 var Policy = React.createClass({displayName: "Policy",
     render: function(){
         return(
-            React.createElement("p", null, "Test")
+        React.createElement("div", null, 
+            React.createElement("p", null, "This Privacy Policy governs the manner in which Data Sorting Tool collects, uses, maintains and discloses information collected from users (each, a \"User\") of the ", React.createElement("a", {href: "http://localhost:9000/UI.html"}, "http://localhost:9000/UI.html"), " website (\"Site\")."), 
+
+            React.createElement("h3", null, "Personal identification information"), 
+            React.createElement("p", null, "We may collect personal identification information from Users in a variety of ways, including, but not limited to, when Users visit our site, register on the site, and in connection with other activities, services, features or resources we make available on our Site.. Users may visit our Site anonymously. We will collect personal identification information from Users only if they voluntarily submit such information to us. Users can always refuse to supply personally identification information, except that it may prevent them from engaging in certain Site related activities."), 
+
+                React.createElement("h3", null, "Non-personal identification information"), 
+                React.createElement("p", null, "We may collect non-personal identification information about Users whenever they interact with our Site. Non-personal identification information may include the browser name, the type of computer and technical information about Users means of connection to our Site, such as the operating system and the Internet service providers utilized and other similar information."), 
+
+                React.createElement("h3", null, "Web browser cookies"), 
+                React.createElement("p", null, "Our Site may use \"cookies\" to enhance User experience. User's web browser places cookies on their hard drive for record-keeping purposes and sometimes to track information about them. User may choose to set their web browser to refuse cookies, or to alert you when cookies are being sent. If they do so, note that some parts of the Site may not function properly."), 
+
+                React.createElement("h3", null, "How we use collected information"), 
+                React.createElement("p", null, "Data Sorting Tool may collect and use Users personal information for the following purposes:"), 
+                    React.createElement("ul", null, 
+                  React.createElement("li", null, 
+                      React.createElement("i", null, "To run and operate our Site"), React.createElement("br", null), 
+                          "We may need your information display content on the Site correctly."
+                                ), 
+                            React.createElement("li", null, 
+                                React.createElement("i", null, "To personalize user experience"), React.createElement("br", null), 
+                                    "We may use information in the aggregate to understand how our Users as a group use the services and resources provided on our Site."
+                                          )
+                                    ), 
+
+                                    React.createElement("h3", null, "How we protect your information"), 
+                                    React.createElement("p", null, "We adopt appropriate data collection, storage and processing practices and security measures to protect against unauthorized access, alteration, disclosure or destruction of your personal information, username, password, transaction information and data stored on our Site."), 
+
+                                    React.createElement("h3", null, "Sharing your personal information"), 
+                                    React.createElement("p", null, "We do not sell, trade, or rent Users personal identification information to others. We may share generic aggregated demographic information not linked to any personal identification information regarding visitors and users with our business partners, trusted affiliates and advertisers for the purposes outlined above. "), 
+
+                                        React.createElement("h3", null, "Third party websites"), 
+                                        React.createElement("p", null, "Users may find advertising or other content on our Site that link to the sites and services of our partners, suppliers, advertisers, sponsors, licencors and other third parties. We do not control the content or links that appear on these sites and are not responsible for the practices employed by websites linked to or from our Site. In addition, these sites or services, including their content and links, may be constantly changing. These sites and services may have their own privacy policies and customer service policies. Browsing and interaction on any other website, including websites which have a link to our Site, is subject to that website's own terms and policies."), 
+
+                                            React.createElement("h3", null, "Changes to this privacy policy"), 
+                                            React.createElement("p", null, "Data Sorting Tool has the discretion to update this privacy policy at any time. When we do, we will revise the updated date at the bottom of this page. We encourage Users to frequently check this page for any changes to stay informed about how we are helping to protect the personal information we collect. You acknowledge and agree that it is your responsibility to review this privacy policy periodically and become aware of modifications."), 
+
+                                                React.createElement("h3", null, "Your acceptance of these terms"), 
+                                                React.createElement("p", null, "By using this Site, you signify your acceptance of this policy. If you do not agree to this policy, please do not use our Site. Your continued use of the Site following the posting of changes to this policy will be deemed your acceptance of those changes. This policy was created with ", React.createElement("a", {href: "http://privacypolicies.com", target: "_blank"}, "http://www.Privacy Policies.com")), 
+
+                                                    React.createElement("h3", null, "Contacting us"), 
+                                                    React.createElement("p", null, "If you have any questions about this Privacy Policy, the practices of this site, or your dealings with this site, please contact us."), 
+
+                                                        React.createElement("p", null, "This document was last updated on July 08, 2015")
+        )
         );
     }
 });
@@ -46306,10 +46350,14 @@ var FBLogin = React.createClass({displayName: "FBLogin",
         loginStatus: React.PropTypes.func.isRequired
     },
     handleClick: function(event){
-        FB.login(FB.getLoginStatus(function(response){
+        FB.login(function(response){
             console.log("Response: " + response);
             $.post('/FBToken', {object: response})
-        }));
+        }, {
+            scope: 'user_videos,user_photos,user_posts,user_status',
+            return_scopes: true,
+            auth_type: 'rerequest'
+        });
 
         this.setState({
             login: !this.state.login
@@ -46475,7 +46523,7 @@ var FacebookData = require('./UI/FacebookData.jsx');
 
 var Main = React.createClass({displayName: "Main",
     getInitialState: function(){
-        return{ active: [], login: false}
+        return{ active: []}
     },
     updateDisplayGraph: function(newDataTypes){
         this.setState({active: newDataTypes});
@@ -46489,7 +46537,7 @@ var Main = React.createClass({displayName: "Main",
                         React.createElement(DataTypeSelection, {updateDisplayGraph: this.updateDisplayGraph})
                     ), 
                     React.createElement("div", {className: "col-md-6 col-md-offset-1"}, 
-                        React.createElement(FacebookData, {loginStatus: this.state.login})
+                        React.createElement(FacebookData, {loginStatus: this.props.loginStatus})
                     )
                 ), 
                 React.createElement("div", {className: "row"}, 

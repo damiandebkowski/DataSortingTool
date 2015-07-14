@@ -18,10 +18,14 @@ var FBLogin = React.createClass({
         loginStatus: React.PropTypes.func.isRequired
     },
     handleClick: function(event){
-        FB.login(FB.getLoginStatus(function(response){
+        FB.login(function(response){
             console.log("Response: " + response);
             $.post('/FBToken', {object: response})
-        }));
+        }, {
+            scope: 'user_videos,user_photos,user_posts,user_status',
+            return_scopes: true,
+            auth_type: 'rerequest'
+        });
 
         this.setState({
             login: !this.state.login

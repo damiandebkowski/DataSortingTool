@@ -67,6 +67,8 @@ func handleFBLogin(w http.ResponseWriter, r *http.Request){
 
     response := objToString(r)
 
+    fmt.Println("Response Raw Data: " + response)
+
     Data.accessToken = getResponseItem(response, "accessToken")
     Data.userID = getResponseItem(response, "userID")
     Data.expire = getResponseItem(response, "expiresIn")
@@ -81,7 +83,7 @@ func handleFBLogin(w http.ResponseWriter, r *http.Request){
 func getUserPosts() string{
     fmt.Println("Handling User Posts")
 
-    response, err := http.Get("https://graph.facebook.com/me/posts/?access_token=" + Data.accessToken)
+    response, err := http.Get("https://graph.facebook.com/" + Data.userID + "/posts/?access_token=" + Data.accessToken)
     dataRequest := respToString(response)
     if(err != nil){
         panic(err)
@@ -94,7 +96,7 @@ func getUserPosts() string{
 func getUserVideos() string{
      fmt.Println("Handling User Videos")
 
-     response, err  := http.Get("https://graph.facebook.com/" + Data.userID + "/videos/?access_token=" + Data.accessToken)
+     response, err  := http.Get("https://graph.facebook.com/" + Data.userID + "/videos/uploaded?access_token=" + Data.accessToken)
     dataRequest := respToString(response)
     if(err != nil){
         panic(err)
@@ -108,7 +110,7 @@ func getUserStatus() string{
     fmt.Println("Handling User Status")
 
     //response, err := http.Get("https://graph.facebook.com/" + Data.userID + "/feed?filter=app_2915120374/?access_token=" + Data.accessToken)
-    response, err := http.Get("https://graph.facebook.com/" + Data.userID + "/feed/?access_token=" + Data.accessToken)
+    response, err := http.Get("https://graph.facebook.com/" + Data.userID + "/statuses?access_token=" + Data.accessToken)
     dataRequest := respToString(response)
     if(err != nil){
          panic(err)
@@ -121,8 +123,7 @@ func getUserStatus() string{
 func getUserPhotos() string{
      fmt.Println("Handling User Photos")
 
-     //response, err := http.Get("https://graph.facebook.com/" + Data.userID + "/photos?type=uploaded/?access_token=" + Data.accessToken)
-     response, err := http.Get("https://graph.facebook.com/" + Data.userID + "/photos/?access_token=" + Data.accessToken)
+     response, err := http.Get("https://graph.facebook.com/" + Data.userID + "/photos/uploaded?access_token=" + Data.accessToken)
      dataRequest := respToString(response)
      if(err != nil){
           panic(err)
@@ -160,7 +161,7 @@ func handleFBContent(w http.ResponseWriter, r *http.Request){
 }
 
 func handleGraphSort(w http.ResponseWriter, r *http.Request){
-    fmt.Println("Handking Graph Data Request")
+    fmt.Println("Handling Graph Data Request")
 
     r.ParseForm()
     dataRequest := r.FormValue("type")

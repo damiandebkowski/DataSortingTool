@@ -7,7 +7,7 @@ var FacebookData = require('./UI/FacebookData.jsx');
 
 var Main = React.createClass({
     getInitialState: function(){
-        return{ active: [], login: false}
+        return{ active: []}
     },
     updateDisplayGraph: function(newDataTypes){
         this.setState({active: newDataTypes});
@@ -21,7 +21,7 @@ var Main = React.createClass({
                         <DataTypeSelection updateDisplayGraph={this.updateDisplayGraph}/>
                     </div>
                     <div className="col-md-6 col-md-offset-1">
-                        <FacebookData loginStatus={this.state.login}/>
+                        <FacebookData loginStatus={this.props.loginStatus}/>
                     </div>
                 </div>
                 <div className="row">
