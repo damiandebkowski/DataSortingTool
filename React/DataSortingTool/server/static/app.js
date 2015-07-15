@@ -45982,50 +45982,52 @@ var Bootstrap = require('bootstrap');
 var Policy = React.createClass({displayName: "Policy",
     render: function(){
         return(
-        React.createElement("div", null, 
+        React.createElement("div", {className: "row"}, 
+            React.createElement("div", {className: "col-lg-10 col-lg-offset-1"}, 
             React.createElement("p", null, "This Privacy Policy governs the manner in which Data Sorting Tool collects, uses, maintains and discloses information collected from users (each, a \"User\") of the ", React.createElement("a", {href: "http://localhost:9000/UI.html"}, "http://localhost:9000/UI.html"), " website (\"Site\")."), 
 
             React.createElement("h3", null, "Personal identification information"), 
             React.createElement("p", null, "We may collect personal identification information from Users in a variety of ways, including, but not limited to, when Users visit our site, register on the site, and in connection with other activities, services, features or resources we make available on our Site.. Users may visit our Site anonymously. We will collect personal identification information from Users only if they voluntarily submit such information to us. Users can always refuse to supply personally identification information, except that it may prevent them from engaging in certain Site related activities."), 
 
-                React.createElement("h3", null, "Non-personal identification information"), 
-                React.createElement("p", null, "We may collect non-personal identification information about Users whenever they interact with our Site. Non-personal identification information may include the browser name, the type of computer and technical information about Users means of connection to our Site, such as the operating system and the Internet service providers utilized and other similar information."), 
+            React.createElement("h3", null, "Non-personal identification information"), 
+            React.createElement("p", null, "We may collect non-personal identification information about Users whenever they interact with our Site. Non-personal identification information may include the browser name, the type of computer and technical information about Users means of connection to our Site, such as the operating system and the Internet service providers utilized and other similar information."), 
 
-                React.createElement("h3", null, "Web browser cookies"), 
-                React.createElement("p", null, "Our Site may use \"cookies\" to enhance User experience. User's web browser places cookies on their hard drive for record-keeping purposes and sometimes to track information about them. User may choose to set their web browser to refuse cookies, or to alert you when cookies are being sent. If they do so, note that some parts of the Site may not function properly."), 
+            React.createElement("h3", null, "Web browser cookies"), 
+            React.createElement("p", null, "Our Site may use \"cookies\" to enhance User experience. User's web browser places cookies on their hard drive for record-keeping purposes and sometimes to track information about them. User may choose to set their web browser to refuse cookies, or to alert you when cookies are being sent. If they do so, note that some parts of the Site may not function properly."), 
 
-                React.createElement("h3", null, "How we use collected information"), 
-                React.createElement("p", null, "Data Sorting Tool may collect and use Users personal information for the following purposes:"), 
-                    React.createElement("ul", null, 
-                  React.createElement("li", null, 
-                      React.createElement("i", null, "To run and operate our Site"), React.createElement("br", null), 
+            React.createElement("h3", null, "How we use collected information"), 
+            React.createElement("p", null, "Data Sorting Tool may collect and use Users personal information for the following purposes:"), 
+            React.createElement("ul", null, 
+                React.createElement("li", null, 
+                    React.createElement("i", null, "To run and operate our Site"), React.createElement("br", null), 
                           "We may need your information display content on the Site correctly."
-                                ), 
-                            React.createElement("li", null, 
-                                React.createElement("i", null, "To personalize user experience"), React.createElement("br", null), 
-                                    "We may use information in the aggregate to understand how our Users as a group use the services and resources provided on our Site."
-                                          )
-                                    ), 
+                ), 
+                React.createElement("li", null, 
+                    React.createElement("i", null, "To personalize user experience"), React.createElement("br", null), 
+                        "We may use information in the aggregate to understand how our Users as a group use the services and resources provided on our Site."
+                )
+            ), 
 
-                                    React.createElement("h3", null, "How we protect your information"), 
-                                    React.createElement("p", null, "We adopt appropriate data collection, storage and processing practices and security measures to protect against unauthorized access, alteration, disclosure or destruction of your personal information, username, password, transaction information and data stored on our Site."), 
+            React.createElement("h3", null, "How we protect your information"), 
+            React.createElement("p", null, "We adopt appropriate data collection, storage and processing practices and security measures to protect against unauthorized access, alteration, disclosure or destruction of your personal information, username, password, transaction information and data stored on our Site."), 
 
-                                    React.createElement("h3", null, "Sharing your personal information"), 
-                                    React.createElement("p", null, "We do not sell, trade, or rent Users personal identification information to others. We may share generic aggregated demographic information not linked to any personal identification information regarding visitors and users with our business partners, trusted affiliates and advertisers for the purposes outlined above. "), 
+            React.createElement("h3", null, "Sharing your personal information"), 
+            React.createElement("p", null, "We do not sell, trade, or rent Users personal identification information to others. We may share generic aggregated demographic information not linked to any personal identification information regarding visitors and users with our business partners, trusted affiliates and advertisers for the purposes outlined above. "), 
 
-                                        React.createElement("h3", null, "Third party websites"), 
-                                        React.createElement("p", null, "Users may find advertising or other content on our Site that link to the sites and services of our partners, suppliers, advertisers, sponsors, licencors and other third parties. We do not control the content or links that appear on these sites and are not responsible for the practices employed by websites linked to or from our Site. In addition, these sites or services, including their content and links, may be constantly changing. These sites and services may have their own privacy policies and customer service policies. Browsing and interaction on any other website, including websites which have a link to our Site, is subject to that website's own terms and policies."), 
+            React.createElement("h3", null, "Third party websites"), 
+            React.createElement("p", null, "Users may find advertising or other content on our Site that link to the sites and services of our partners, suppliers, advertisers, sponsors, licencors and other third parties. We do not control the content or links that appear on these sites and are not responsible for the practices employed by websites linked to or from our Site. In addition, these sites or services, including their content and links, may be constantly changing. These sites and services may have their own privacy policies and customer service policies. Browsing and interaction on any other website, including websites which have a link to our Site, is subject to that website's own terms and policies."), 
 
-                                            React.createElement("h3", null, "Changes to this privacy policy"), 
-                                            React.createElement("p", null, "Data Sorting Tool has the discretion to update this privacy policy at any time. When we do, we will revise the updated date at the bottom of this page. We encourage Users to frequently check this page for any changes to stay informed about how we are helping to protect the personal information we collect. You acknowledge and agree that it is your responsibility to review this privacy policy periodically and become aware of modifications."), 
+            React.createElement("h3", null, "Changes to this privacy policy"), 
+            React.createElement("p", null, "Data Sorting Tool has the discretion to update this privacy policy at any time. When we do, we will revise the updated date at the bottom of this page. We encourage Users to frequently check this page for any changes to stay informed about how we are helping to protect the personal information we collect. You acknowledge and agree that it is your responsibility to review this privacy policy periodically and become aware of modifications."), 
 
-                                                React.createElement("h3", null, "Your acceptance of these terms"), 
-                                                React.createElement("p", null, "By using this Site, you signify your acceptance of this policy. If you do not agree to this policy, please do not use our Site. Your continued use of the Site following the posting of changes to this policy will be deemed your acceptance of those changes. This policy was created with ", React.createElement("a", {href: "http://privacypolicies.com", target: "_blank"}, "http://www.Privacy Policies.com")), 
+            React.createElement("h3", null, "Your acceptance of these terms"), 
+            React.createElement("p", null, "By using this Site, you signify your acceptance of this policy. If you do not agree to this policy, please do not use our Site. Your continued use of the Site following the posting of changes to this policy will be deemed your acceptance of those changes. This policy was created with ", React.createElement("a", {href: "http://privacypolicies.com", target: "_blank"}, "http://www.Privacy Policies.com")), 
 
-                                                    React.createElement("h3", null, "Contacting us"), 
-                                                    React.createElement("p", null, "If you have any questions about this Privacy Policy, the practices of this site, or your dealings with this site, please contact us."), 
+            React.createElement("h3", null, "Contacting us"), 
+            React.createElement("p", null, "If you have any questions about this Privacy Policy, the practices of this site, or your dealings with this site, please contact us."), 
 
-                                                        React.createElement("p", null, "This document was last updated on July 08, 2015")
+            React.createElement("p", null, "This document was last updated on July 08, 2015")
+            )
         )
         );
     }
@@ -46170,6 +46172,7 @@ module.exports = CheckBox;
 },{"bootstrap":1,"react":189}],197:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
+var $ = require('jquery');
 
 var Content = React.createClass({displayName: "Content",
     render: function(){
@@ -46180,7 +46183,7 @@ var Content = React.createClass({displayName: "Content",
         }
 
         return(
-            React.createElement("div", {class: "list-group"}, 
+            React.createElement("div", {className: "list-group"}, 
                 items
             )
         );
@@ -46189,7 +46192,7 @@ var Content = React.createClass({displayName: "Content",
 
 module.exports = Content;
 
-},{"bootstrap":1,"react":189}],198:[function(require,module,exports){
+},{"bootstrap":1,"jquery":15,"react":189}],198:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
 var CheckBox = require('./CheckBox.jsx');
@@ -46424,6 +46427,7 @@ var FacebookData = React.createClass({displayName: "FacebookData",
     },
     renderData: function(data){
         this.setState({contentData: data});
+        console.log("Data From Server To Load: " + data)
     },
     loadPosts: function(event){
         this.setState({
@@ -46441,6 +46445,7 @@ var FacebookData = React.createClass({displayName: "FacebookData",
         this.setState({
             selected: 'videos'
         });
+        //#_Description - Time - Picture - ID - Source/End
         $.get("/FBContent", {data: 'videos'}, function(newdata){this.renderData(newdata);}.bind(this), "text");
     },
     loadStatus: function(event){
@@ -46457,7 +46462,7 @@ var FacebookData = React.createClass({displayName: "FacebookData",
 
         var loadContent;
         if(this.state.selected.length != 0){
-            loadContent = React.createElement(Content, null)
+            loadContent = React.createElement(Content, {data: this.state.contentData})
         }
 
         return(
@@ -46503,6 +46508,7 @@ var NavBar = React.createClass({displayName: "NavBar",
         getRenderState: React.PropTypes.func.isRequired
     },
     updateRenderState: function(renderState){
+        window.location.href='#' + renderState;
         this.props.getRenderState(renderState);
     },
     render: function(){
@@ -46516,7 +46522,7 @@ var NavBar = React.createClass({displayName: "NavBar",
                         React.createElement("button", {type: "button", className: "navbar-btn btn btn-default", onClick: this.updateRenderState.bind(this, 'HOME')}, "Home"), 
                         React.createElement("button", {type: "button", className: "navbar-btn btn btn-default", onClick: this.updateRenderState.bind(this, 'ABOUT')}, "About"), 
                         React.createElement("button", {type: "button", className: "navbar-btn btn btn-default", onClick: this.updateRenderState.bind(this, 'CONTACT')}, "Contact"), 
-                        React.createElement("button", {type: "button", className: "navbar-btn btn btn-default", onClick: this.updateRenderState.bind(this, 'POLICY')}, "Private Policy"), 
+                        React.createElement("button", {href: "#policy", type: "button", className: "navbar-btn btn btn-default", onClick: this.updateRenderState.bind(this, 'POLICY')}, "Private Policy"), 
                         React.createElement("form", {id: "facebookLogin", name: "facebookLogin", className: "navbar-form navbar-right", action: "/FBToken", method: "post"}, 
                             React.createElement(FBLoginButton, {loginStatus: this.getLoginStatus})
                         )

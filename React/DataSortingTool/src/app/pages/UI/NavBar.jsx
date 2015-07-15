@@ -21,6 +21,7 @@ var NavBar = React.createClass({
         getRenderState: React.PropTypes.func.isRequired
     },
     updateRenderState: function(renderState){
+        window.location.href='#' + renderState;
         this.props.getRenderState(renderState);
     },
     render: function(){
@@ -34,7 +35,7 @@ var NavBar = React.createClass({
                         <button type="button" className="navbar-btn btn btn-default" onClick={this.updateRenderState.bind(this, 'HOME')}>Home</button>
                         <button type="button" className="navbar-btn btn btn-default" onClick={this.updateRenderState.bind(this, 'ABOUT')}>About</button>
                         <button type="button" className="navbar-btn btn btn-default" onClick={this.updateRenderState.bind(this, 'CONTACT')}>Contact</button>
-                        <button type="button" className="navbar-btn btn btn-default" onClick={this.updateRenderState.bind(this, 'POLICY')}>Private Policy</button>
+                        <button href="#policy" type="button" className="navbar-btn btn btn-default" onClick={this.updateRenderState.bind(this, 'POLICY')}>Private Policy</button>
                         <form id="facebookLogin" name="facebookLogin" className="navbar-form navbar-right" action="/FBToken" method="post">
                             <FBLoginButton loginStatus={this.getLoginStatus}/>
                         </form>

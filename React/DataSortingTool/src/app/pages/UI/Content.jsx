@@ -1,5 +1,6 @@
 var React = require('react');
 var Bootstrap = require('bootstrap');
+var $ = require('jquery');
 
 var Content = React.createClass({
     render: function(){
@@ -10,7 +11,7 @@ var Content = React.createClass({
         }
 
         return(
-            <div class="list-group">
+            <div className="list-group">
                 {items}
             </div>
         );
