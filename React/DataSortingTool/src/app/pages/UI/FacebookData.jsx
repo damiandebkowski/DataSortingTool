@@ -23,7 +23,6 @@ var FacebookData = React.createClass({
     },
     renderData: function(data){
         this.setState({contentData: data});
-        console.log("Data From Server To Load: " + data)
     },
     loadPosts: function(event){
         this.setState({
@@ -41,7 +40,6 @@ var FacebookData = React.createClass({
         this.setState({
             selected: 'videos'
         });
-        //#_Description - Time - Picture - ID - Source/End
         $.get("/FBContent", {data: 'videos'}, function(newdata){this.renderData(newdata);}.bind(this), "text");
     },
     loadStatus: function(event){
@@ -49,6 +47,9 @@ var FacebookData = React.createClass({
             selected: 'status'
         });
         $.get("/FBContent", {data: 'status'}, function(newdata){this.renderData(newdata);}.bind(this), "text");
+    },
+    getButtonID: function(id){
+        this.props.getButtonID(id);
     },
     render: function(){
         var errorLogin;
@@ -58,7 +59,7 @@ var FacebookData = React.createClass({
 
         var loadContent;
         if(this.state.selected.length != 0){
-            loadContent = <Content data={this.state.contentData}/>
+            loadContent = <Content data={this.state.contentData} getButtonID={this.getButtonID}/>
         }
 
         return(

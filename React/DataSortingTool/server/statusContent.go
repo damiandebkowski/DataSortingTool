@@ -62,8 +62,5 @@ func statusJSONToStruct(response *http.Response){
 
      err = json.Unmarshal([]byte(responseObject), &statusData)
     handleError(err, "statusContent.statusJSONToStruct")
-
-     //test struct
-    fmt.Println("Test Status ID: " + statusData.Data[0].ID)
 }
 

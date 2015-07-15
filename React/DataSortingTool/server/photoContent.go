@@ -61,8 +61,5 @@ func photoJSONToStruct(response *http.Response){
 
      err = json.Unmarshal([]byte(responseObject), &photoData)
     handleError(err, "photoContent.photoJSONToStruct")
-
-     //test struct
-     fmt.Println("Test Photo ID: " + photoData.Data[0].ID)
 }
 

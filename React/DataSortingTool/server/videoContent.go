@@ -70,8 +70,5 @@ func videoJSONToStruct(response *http.Response){
 
     err = json.Unmarshal([]byte(responseObject), &videoData)
     handleError(err, "videoContent.videoJSONToStruct")
-
-    //test struct
-    fmt.Println("Test Video ID: " + videoData.Data[0].ID)
 }
 

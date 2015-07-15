@@ -7,11 +7,17 @@ var FacebookData = require('./UI/FacebookData.jsx');
 
 var Main = React.createClass({
     getInitialState: function(){
-        return{ active: []}
+        return{ active: [], buttonID: ''}
     },
     updateDisplayGraph: function(newDataTypes){
         this.setState({active: newDataTypes});
         console.log("Updated Data Types: " + this.state.active);
+    },
+    getButtonID: function(id){
+        console.log("Main Button ID: " + id)
+        this.setState({
+            buttonID: id
+        });
     },
     render: function(){
         return(
@@ -21,12 +27,12 @@ var Main = React.createClass({
                         <DataTypeSelection updateDisplayGraph={this.updateDisplayGraph}/>
                     </div>
                     <div className="col-md-6 col-md-offset-1">
-                        <FacebookData loginStatus={this.props.loginStatus}/>
+                        <FacebookData loginStatus={this.props.loginStatus} getButtonID={this.getButtonID}/>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-8 col-md-offset-2">
-                        <DisplayGraph dataTypes={this.state.active}/>
+                        <DisplayGraph dataTypes={this.state.active} buttonID={this.state.buttonID}/>
                     </div>
                 </div>
             </div>

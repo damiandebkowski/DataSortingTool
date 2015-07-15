@@ -3,6 +3,7 @@ var ReactAddon = require('react/addons');
 var Bootstrap = require('bootstrap');
 var _ = require('lodash');
 var PieChart = require('./Charts/PieChart.jsx');
+var $ = require('jquery');
 
 /*
  * Class: DisplayGraph
@@ -16,6 +17,13 @@ var DisplayGraph = React.createClass({
     },
     componentWillReceiveProps: function(nextProps){
         this.setState({active: nextProps.dataTypes});
+    },
+    shouldComponentUpdate: function(nextProps, nextState){
+        if(this.props.buttonID != nextProps.buttonID){
+            console.log("Go Get Server Data")
+            return true;
+        }
+        return false;
     },
     render: function(){
         var genderChart;

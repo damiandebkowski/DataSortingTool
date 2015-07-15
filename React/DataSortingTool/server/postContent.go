@@ -87,8 +87,5 @@ func postJSONToStruct(response *http.Response){
 
      err = json.Unmarshal([]byte(responseObject), &postData)
     handleError(err, "postContent.postJSONToStruct")
-
-     //test struct
-     fmt.Println("Test Post ID: " + postData.Data[0].ID)
 }
 

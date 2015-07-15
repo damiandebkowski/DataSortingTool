@@ -26,7 +26,15 @@ func getUserPosts() string{
 
     postJSONToStruct(response)
 
-    return "Test Load Posts"
+    data := ""
+    for i := 0; i < len(postData.Data); i++ {
+        data += postData.Data[i].ID
+        if(i != (len(postData.Data)-1)){
+            data += "/"
+        }
+    }
+
+    return data
 }
 
 func getUserVideos() string{
@@ -36,17 +44,15 @@ func getUserVideos() string{
     handleError(err, "facebookCalls.getUserVideos")
     videoJSONToStruct(response)
 
-    /*
     data := ""
-
     for i := 0; i < len(videoData.Data); i++ {
-        fmt.Println("Video ID: " + videoData.Data[i].ID)
-        data += videoData.Data[i].ID + "/"
+        data += videoData.Data[i].ID
+        if(i != (len(videoData.Data)-1)){
+            data += "/"
+        }
     }
 
-    fmt.Println("Test Data: " + data)
-    */
-    return "Test Load Videos"
+    return data
 }
 
 func getUserStatus() string{
@@ -54,17 +60,17 @@ func getUserStatus() string{
 
     response, err := http.Get("https://graph.facebook.com/" + Data.userID + "/statuses?access_token=" + Data.accessToken)
     handleError(err, "facebookCalls.getUserStatus")
-
     statusJSONToStruct(response)
-    /*
+
     data := ""
-    indexSize := len(statusData.Data)
-    for i:= 0; i < indexSize; i++ {
-        fmt.Println("Status ID: " + statusData.Data[i].ID)
-        data += videoData.Data[i].ID + "/"
+    for i := 0; i < len(statusData.Data); i++ {
+        data += statusData.Data[i].ID
+        if(i != (len(statusData.Data)-1)){
+            data += "/"
+        }
     }
-    */
-    return "Test Load Status"
+
+    return data
 }
 
 func getUserPhotos() string{
@@ -72,9 +78,16 @@ func getUserPhotos() string{
 
     response, err := http.Get("https://graph.facebook.com/" + Data.userID + "/photos/uploaded?access_token=" + Data.accessToken)
     handleError(err, "facebookCalls.getUserPhotos")
-
     photoJSONToStruct(response)
 
-    return "Test Load Photos"
+    data := ""
+    for i := 0; i < len(photoData.Data); i++ {
+         data += photoData.Data[i].ID
+         if(i != (len(photoData.Data)-1)){
+              data += "/"
+         }
+    }
+
+    return data
 }
 

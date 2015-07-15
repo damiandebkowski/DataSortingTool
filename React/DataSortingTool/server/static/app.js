@@ -45867,7 +45867,7 @@ var Container = React.createClass({displayName: "Container",
 
 module.exports = Container;
 
-},{"./pages/About.jsx":192,"./pages/Contact.jsx":193,"./pages/Policy.jsx":194,"./pages/UI/NavBar.jsx":202,"./pages/main.jsx":203,"bootstrap":1,"react":189}],191:[function(require,module,exports){
+},{"./pages/About.jsx":192,"./pages/Contact.jsx":193,"./pages/Policy.jsx":194,"./pages/UI/NavBar.jsx":203,"./pages/main.jsx":204,"bootstrap":1,"react":189}],191:[function(require,module,exports){
 var React = require('react');
 var Container = require('./Container.jsx');
 
@@ -46173,13 +46173,24 @@ module.exports = CheckBox;
 var React = require('react');
 var Bootstrap = require('bootstrap');
 var $ = require('jquery');
+var Button = require('./ContentButton.jsx');
 
 var Content = React.createClass({displayName: "Content",
+    shouldComponentUpdate: function(nextProps, nextState){
+        return this.props.data != nextProps.data;
+    },
+    getButtonID: function(id){
+        this.props.getButtonID(id);
+    },
     render: function(){
+        console.log("Rendering Contents From Facebook " + this.props.data)
+
         var items = [];
 
-        for(var i = 0; i < 20; i++){
-            items.push(React.createElement("button", {type: "button", className: "list-group-item"}, "Button ", i))
+        var serverData = this.props.data;
+        var itemIDs = serverData.split("/");
+        for(var i = 0; i < itemIDs.length; i++){
+            items.push(React.createElement(Button, {id: itemIDs[i], getButtonID: this.getButtonID}))
         }
 
         return(
@@ -46192,7 +46203,25 @@ var Content = React.createClass({displayName: "Content",
 
 module.exports = Content;
 
-},{"bootstrap":1,"jquery":15,"react":189}],198:[function(require,module,exports){
+},{"./ContentButton.jsx":198,"bootstrap":1,"jquery":15,"react":189}],198:[function(require,module,exports){
+var React = require('react');
+var Bootstrap = require('bootstrap');
+var $ = require('jquery');
+
+var ContentButton = React.createClass({displayName: "ContentButton",
+    handleClick: function(event){
+        this.props.getButtonID(this.props.id)
+    },
+    render: function(){
+        return(
+            React.createElement("button", {type: "button", key: this.props.id, className: "list-group-item", onClick: this.handleClick}, "Button ID: ", this.props.id)
+        );
+    }
+});
+
+module.exports = ContentButton;
+
+},{"bootstrap":1,"jquery":15,"react":189}],199:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
 var CheckBox = require('./CheckBox.jsx');
@@ -46288,7 +46317,7 @@ var DataTypeSelection = React.createClass({displayName: "DataTypeSelection",
 
 module.exports = DataTypeSelection;
 
-},{"./CheckBox.jsx":196,"bootstrap":1,"jquery":15,"react":189}],199:[function(require,module,exports){
+},{"./CheckBox.jsx":196,"bootstrap":1,"jquery":15,"react":189}],200:[function(require,module,exports){
 var React = require('react');
 var ReactAddon = require('react/addons');
 var Bootstrap = require('bootstrap');
@@ -46307,6 +46336,14 @@ var DisplayGraph = React.createClass({displayName: "DisplayGraph",
     },
     componentWillReceiveProps: function(nextProps){
         this.setState({active: nextProps.dataTypes});
+    },
+    shouldComponentUpdate: function(nextProps, nextState){
+        if(this.props.buttonID != nextProps.buttonID){
+            console.log("Go Get Server Data")
+            return true;
+        }
+
+        return false;
     },
     render: function(){
         var genderChart;
@@ -46354,7 +46391,7 @@ var DisplayGraph = React.createClass({displayName: "DisplayGraph",
 
 module.exports = DisplayGraph;
 
-},{"./Charts/PieChart.jsx":195,"bootstrap":1,"lodash":16,"react":189,"react/addons":17}],200:[function(require,module,exports){
+},{"./Charts/PieChart.jsx":195,"bootstrap":1,"lodash":16,"react":189,"react/addons":17}],201:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
 var $ = require('jquery');
@@ -46401,7 +46438,7 @@ var FBLogin = React.createClass({displayName: "FBLogin",
 
 module.exports = FBLogin;
 
-},{"bootstrap":1,"jquery":15,"react":189}],201:[function(require,module,exports){
+},{"bootstrap":1,"jquery":15,"react":189}],202:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
 var $ = require('jquery');
@@ -46427,7 +46464,6 @@ var FacebookData = React.createClass({displayName: "FacebookData",
     },
     renderData: function(data){
         this.setState({contentData: data});
-        console.log("Data From Server To Load: " + data)
     },
     loadPosts: function(event){
         this.setState({
@@ -46445,7 +46481,6 @@ var FacebookData = React.createClass({displayName: "FacebookData",
         this.setState({
             selected: 'videos'
         });
-        //#_Description - Time - Picture - ID - Source/End
         $.get("/FBContent", {data: 'videos'}, function(newdata){this.renderData(newdata);}.bind(this), "text");
     },
     loadStatus: function(event){
@@ -46453,6 +46488,9 @@ var FacebookData = React.createClass({displayName: "FacebookData",
             selected: 'status'
         });
         $.get("/FBContent", {data: 'status'}, function(newdata){this.renderData(newdata);}.bind(this), "text");
+    },
+    getButtonID: function(id){
+        this.props.getButtonID(id);
     },
     render: function(){
         var errorLogin;
@@ -46462,7 +46500,7 @@ var FacebookData = React.createClass({displayName: "FacebookData",
 
         var loadContent;
         if(this.state.selected.length != 0){
-            loadContent = React.createElement(Content, {data: this.state.contentData})
+            loadContent = React.createElement(Content, {data: this.state.contentData, getButtonID: this.getButtonID})
         }
 
         return(
@@ -46484,7 +46522,7 @@ var FacebookData = React.createClass({displayName: "FacebookData",
 
 module.exports = FacebookData;
 
-},{"./Content.jsx":197,"bootstrap":1,"jquery":15,"react":189}],202:[function(require,module,exports){
+},{"./Content.jsx":197,"bootstrap":1,"jquery":15,"react":189}],203:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
 var FBLoginButton = require('./FB/FBLogin.jsx');
@@ -46535,7 +46573,7 @@ var NavBar = React.createClass({displayName: "NavBar",
 
 module.exports = NavBar;
 
-},{"./FB/FBLogin.jsx":200,"bootstrap":1,"react":189}],203:[function(require,module,exports){
+},{"./FB/FBLogin.jsx":201,"bootstrap":1,"react":189}],204:[function(require,module,exports){
 var React = require('react');
 var BootStrap = require('bootstrap');
 
@@ -46545,11 +46583,17 @@ var FacebookData = require('./UI/FacebookData.jsx');
 
 var Main = React.createClass({displayName: "Main",
     getInitialState: function(){
-        return{ active: []}
+        return{ active: [], buttonID: ''}
     },
     updateDisplayGraph: function(newDataTypes){
         this.setState({active: newDataTypes});
         console.log("Updated Data Types: " + this.state.active);
+    },
+    getButtonID: function(id){
+        console.log("Main Button ID: " + id)
+        this.setState({
+            buttonID: id
+        });
     },
     render: function(){
         return(
@@ -46559,12 +46603,12 @@ var Main = React.createClass({displayName: "Main",
                         React.createElement(DataTypeSelection, {updateDisplayGraph: this.updateDisplayGraph})
                     ), 
                     React.createElement("div", {className: "col-md-6 col-md-offset-1"}, 
-                        React.createElement(FacebookData, {loginStatus: this.props.loginStatus})
+                        React.createElement(FacebookData, {loginStatus: this.props.loginStatus, getButtonID: this.getButtonID})
                     )
                 ), 
                 React.createElement("div", {className: "row"}, 
                     React.createElement("div", {className: "col-md-8 col-md-offset-2"}, 
-                        React.createElement(DisplayGraph, {dataTypes: this.state.active})
+                        React.createElement(DisplayGraph, {dataTypes: this.state.active, buttonID: this.state.buttonID})
                     )
                 )
             )
@@ -46574,4 +46618,4 @@ var Main = React.createClass({displayName: "Main",
 
 module.exports = Main;
 
-},{"./UI/DataTypeSelection.jsx":198,"./UI/DisplayGraph.jsx":199,"./UI/FacebookData.jsx":201,"bootstrap":1,"react":189}]},{},[191]);
+},{"./UI/DataTypeSelection.jsx":199,"./UI/DisplayGraph.jsx":200,"./UI/FacebookData.jsx":202,"bootstrap":1,"react":189}]},{},[191]);
