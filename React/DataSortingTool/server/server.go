@@ -12,7 +12,7 @@ func main(){
     fmt.Println("Handling Server Functions...")
     http.HandleFunc("/FBToken", handleFBLogin)
     http.HandleFunc("/FBContent", handleFBContent)
-    http.HandleFunc("/GraphData", handleGraphSort)
+    http.HandleFunc("/GraphData", handleGraphContent)
 
     fmt.Println("Starting Server...")
     e := http.ListenAndServe(":9000", nil)

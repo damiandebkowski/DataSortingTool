@@ -58,14 +58,13 @@ func handleFBContent(w http.ResponseWriter, r *http.Request){
     }
 
     io.WriteString(w, dataRequest)
-    //response, err := http.Post("localhost:9000/UI.html", "")
 }
 
-func handleGraphSort(w http.ResponseWriter, r *http.Request){
-    fmt.Println("Handling Graph Data Request")
-
+func handleGraphContent(w http.ResponseWriter, r *http.Request){
+    fmt.Println("Handling Graph Data Request...")
     r.ParseForm()
     dataRequest := r.FormValue("type")
-    fmt.Println("Graph Type Request: " + dataRequest)
+    fmt.Println("Content Type Request: " + dataRequest)
 
+    io.WriteString(w, "Testing Graphs")
 }

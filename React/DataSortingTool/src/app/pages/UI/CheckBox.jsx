@@ -28,7 +28,6 @@ var CheckBox = React.createClass({
         this.setState({
             checked: !this.state.checked
         });
-        console.log("CheckBox Id: " + this.props.id + " Check Box Status: " + this.state.checked);
         this.props.checkDataType(this.props.id, this.state.checked);
     },
     render: function(){

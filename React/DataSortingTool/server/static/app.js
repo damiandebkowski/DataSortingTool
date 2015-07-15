@@ -46157,7 +46157,6 @@ var CheckBox = React.createClass({displayName: "CheckBox",
         this.setState({
             checked: !this.state.checked
         });
-        console.log("CheckBox Id: " + this.props.id + " Check Box Status: " + this.state.checked);
         this.props.checkDataType(this.props.id, this.state.checked);
     },
     render: function(){
@@ -46183,8 +46182,6 @@ var Content = React.createClass({displayName: "Content",
         this.props.getButtonID(id);
     },
     render: function(){
-        console.log("Rendering Contents From Facebook " + this.props.data)
-
         var items = [];
 
         var serverData = this.props.data;
@@ -46262,7 +46259,6 @@ var DataTypeSelection = React.createClass({displayName: "DataTypeSelection",
         this.setState({active: temp});
         temp = temp.toString();
         this.props.updateDisplayGraph(this.state.active);
-        console.log("Updated Type List: " + this.state.active);
     },
     render: function(){
         return(
@@ -46323,6 +46319,7 @@ var ReactAddon = require('react/addons');
 var Bootstrap = require('bootstrap');
 var _ = require('lodash');
 var PieChart = require('./Charts/PieChart.jsx');
+var $ = require('jquery');
 
 /*
  * Class: DisplayGraph
@@ -46331,19 +46328,22 @@ var PieChart = require('./Charts/PieChart.jsx');
  */
 
 var DisplayGraph = React.createClass({displayName: "DisplayGraph",
-    getInitialState: function(){
-        return{active: this.props.dataTypes}
-    },
     componentWillReceiveProps: function(nextProps){
-        this.setState({active: nextProps.dataTypes});
+        this.updateGraphs();
     },
     shouldComponentUpdate: function(nextProps, nextState){
         if(this.props.buttonID != nextProps.buttonID){
-            console.log("Go Get Server Data")
+            this.updateGraphs();
             return true;
         }
-
         return false;
+    },
+    updateGraphs: function(){
+        var data = this.props.dataTypes;
+        data = data.toString();
+        if(data != "" && this.props.buttonID != ""){
+            $.get("/GraphData", {type: data}, function(newdata){console.log("Graph Data: " + newdata);}.bind(this));
+        }
     },
     render: function(){
         var genderChart;
@@ -46351,7 +46351,7 @@ var DisplayGraph = React.createClass({displayName: "DisplayGraph",
         var locationChart;
         var educationChart;
 
-        var findDataType = this.state.active;
+        var findDataType = this.props.dataTypes;
         findDataType = findDataType.toString();
 
         if(findDataType.search("Gender") != -1){
@@ -46369,7 +46369,7 @@ var DisplayGraph = React.createClass({displayName: "DisplayGraph",
 
         var errorType;
         if(findDataType.length == 0){
-            errorType = React.createElement("h3", {className: "text-center"}, React.createElement("span", {className: "label label-danger"}, "Please Select A Data Type"))
+            errorType = React.createElement("h3", {className: "text-center"}, React.createElement("span", {className: "label label-danger"}, "Please Select A Data Type And Facebook Content"))
         }
 
         return(
@@ -46391,7 +46391,7 @@ var DisplayGraph = React.createClass({displayName: "DisplayGraph",
 
 module.exports = DisplayGraph;
 
-},{"./Charts/PieChart.jsx":195,"bootstrap":1,"lodash":16,"react":189,"react/addons":17}],201:[function(require,module,exports){
+},{"./Charts/PieChart.jsx":195,"bootstrap":1,"jquery":15,"lodash":16,"react":189,"react/addons":17}],201:[function(require,module,exports){
 var React = require('react');
 var Bootstrap = require('bootstrap');
 var $ = require('jquery');
@@ -46587,7 +46587,6 @@ var Main = React.createClass({displayName: "Main",
     },
     updateDisplayGraph: function(newDataTypes){
         this.setState({active: newDataTypes});
-        console.log("Updated Data Types: " + this.state.active);
     },
     getButtonID: function(id){
         console.log("Main Button ID: " + id)

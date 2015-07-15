@@ -11,8 +11,6 @@ var Content = React.createClass({
         this.props.getButtonID(id);
     },
     render: function(){
-        console.log("Rendering Contents From Facebook " + this.props.data)
-
         var items = [];
 
         var serverData = this.props.data;

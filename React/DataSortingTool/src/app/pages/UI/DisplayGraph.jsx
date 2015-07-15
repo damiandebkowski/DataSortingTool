@@ -12,18 +12,22 @@ var $ = require('jquery');
  */
 
 var DisplayGraph = React.createClass({
-    getInitialState: function(){
-        return{active: this.props.dataTypes}
-    },
     componentWillReceiveProps: function(nextProps){
-        this.setState({active: nextProps.dataTypes});
+        this.updateGraphs();
     },
     shouldComponentUpdate: function(nextProps, nextState){
         if(this.props.buttonID != nextProps.buttonID){
-            console.log("Go Get Server Data")
+            this.updateGraphs();
             return true;
         }
         return false;
+    },
+    updateGraphs: function(){
+        var data = this.props.dataTypes;
+        data = data.toString();
+        if(data != "" && this.props.buttonID != ""){
+            $.get("/GraphData", {type: data}, function(newdata){console.log("Graph Data: " + newdata);}.bind(this));
+        }
     },
     render: function(){
         var genderChart;
@@ -31,7 +35,7 @@ var DisplayGraph = React.createClass({
         var locationChart;
         var educationChart;
 
-        var findDataType = this.state.active;
+        var findDataType = this.props.dataTypes;
         findDataType = findDataType.toString();
 
         if(findDataType.search("Gender") != -1){
@@ -49,7 +53,7 @@ var DisplayGraph = React.createClass({
 
         var errorType;
         if(findDataType.length == 0){
-            errorType = <h3 className="text-center"><span className="label label-danger">Please Select A Data Type</span></h3>
+            errorType = <h3 className="text-center"><span className="label label-danger">Please Select A Data Type And Facebook Content</span></h3>
         }
 
         return(

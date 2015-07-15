@@ -38,7 +38,6 @@ var DataTypeSelection = React.createClass({
         this.setState({active: temp});
         temp = temp.toString();
         this.props.updateDisplayGraph(this.state.active);
-        console.log("Updated Type List: " + this.state.active);
     },
     render: function(){
         return(

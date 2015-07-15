@@ -11,7 +11,6 @@ var Main = React.createClass({
     },
     updateDisplayGraph: function(newDataTypes){
         this.setState({active: newDataTypes});
-        console.log("Updated Data Types: " + this.state.active);
     },
     getButtonID: function(id){
         console.log("Main Button ID: " + id)
